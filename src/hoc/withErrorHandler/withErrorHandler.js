@@ -6,18 +6,35 @@ import Auxilary from '../Auxilary'
 const withErrorHandler = (WrappedComponent, axios) => {
 
     return class extends Component {
-        state ={
-            error: null
+        constructor() {
+            super();
+            this.state ={
+                error: null
+            }
+            // axios.interceptors.request.use(res => {
+            //     this.setState({ error: null })
+            //     return res;
+            // })
+            // axios.interceptors.response.use( res => res, err => {
+            //     console.log(err)
+            //     this.setState({ error: err })
+            // })
         }
-        componentDidMount () {
-            axios.interceptors.request.use(res => {
+        
+        componentWillMount () {
+            this.reqInterceptor =  axios.interceptors.request.use(res => {
                 this.setState({ error: null })
                 return res;
             })
-            axios.interceptors.response.use( res => res, err => {
+            this.resInterceptor = axios.interceptors.response.use( res => res, err => {
                 console.log(err)
                 this.setState({ error: err })
             })
+        }
+
+        componentWillUnmount () {
+            axios.interceptors.request.eject(this.reqInterceptor);
+            axios.interceptors.response.eject(this.resInterceptor)
         }
 
         errorConfirmedHandler = () => {
