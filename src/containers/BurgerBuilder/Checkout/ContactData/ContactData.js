@@ -15,6 +15,10 @@ class ContactData extends Component {
           placeholder: "Your name",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       street: {
         elementType: "input",
@@ -23,6 +27,10 @@ class ContactData extends Component {
           placeholder: "Street",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       zipCode: {
         elementType: "input",
@@ -31,6 +39,11 @@ class ContactData extends Component {
           placeholder: "ZIP Code",
         },
         value: "",
+        validation: {
+          required: true,
+          length: 5,
+        },
+        valid: false,
       },
       country: {
         elementType: "input",
@@ -39,6 +52,10 @@ class ContactData extends Component {
           placeholder: "Country",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       email: {
         elementType: "input",
@@ -47,6 +64,10 @@ class ContactData extends Component {
           placeholder: "Your E-Mail",
         },
         value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
       },
       deliveryMethod: {
         elementType: "select",
@@ -62,6 +83,18 @@ class ContactData extends Component {
     loading: false,
   };
 
+  checkValidity = (value, rules) => {
+    let isValid = true;
+    console.log(value);
+    if (rules.required) {
+      isValid = value.trim() !== "" && isValid;
+    }
+    if (rules.length) {
+      isValid = value.length === 5 && isValid;
+    }
+    return isValid;
+  };
+
   orderHandler = (e) => {
     e.preventDefault();
     this.setState({ loading: true });
@@ -69,7 +102,6 @@ class ContactData extends Component {
     for (let formElement in this.state.orderForm) {
       formData[formElement] = this.state.orderForm[formElement].value;
     }
-    console.log(formData);
     const order = {
       ingredient: this.props.ingredients,
       price: this.props.price,
@@ -93,6 +125,11 @@ class ContactData extends Component {
     };
     const updatedFormElement = { ...updatedOrderForm[inputidentifyer] };
     updatedFormElement.value = e.target.value;
+    updatedFormElement.valid = this.checkValidity(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
+    console.log(updatedFormElement);
     updatedOrderForm[inputidentifyer] = updatedFormElement;
     this.setState({ orderForm: updatedOrderForm });
   };
