@@ -116,7 +116,6 @@ class ContactData extends Component {
       .catch((err) => {
         this.setState({ loading: false });
       });
-    console.log(this.props.ingredients);
   };
 
   inputChangedHandler = (e, inputidentifyer) => {
@@ -125,10 +124,13 @@ class ContactData extends Component {
     };
     const updatedFormElement = { ...updatedOrderForm[inputidentifyer] };
     updatedFormElement.value = e.target.value;
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
-    );
+    if (updatedFormElement.validation) {
+      updatedFormElement.valid = this.checkValidity(
+        updatedFormElement.value,
+        updatedFormElement.validation
+      );
+    }
+
     console.log(updatedFormElement);
     updatedOrderForm[inputidentifyer] = updatedFormElement;
     this.setState({ orderForm: updatedOrderForm });
@@ -151,6 +153,8 @@ class ContactData extends Component {
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
+            Invalid={!formElement.config.valid}
+            ShouldValidate={formElement.config.validation}
             changed={(e) => this.inputChangedHandler(e, formElement.id)}
           />
         ))}
