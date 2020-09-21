@@ -3,7 +3,7 @@ import React from "react";
 import Classes from "./Input.css";
 const Input = (props) => {
   const inputClasses = [Classes.InputElement];
-  if (props.Invalid && props.ShouldValidate) {
+  if (props.Touched && props.Invalid && props.ShouldValidate) {
     inputClasses.push(Classes.Invalid);
   }
   let inputElement = null;

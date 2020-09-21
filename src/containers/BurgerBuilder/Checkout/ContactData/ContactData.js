@@ -19,6 +19,7 @@ class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       street: {
         elementType: "input",
@@ -31,6 +32,7 @@ class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       zipCode: {
         elementType: "input",
@@ -44,6 +46,7 @@ class ContactData extends Component {
           length: 5,
         },
         valid: false,
+        touched: false,
       },
       country: {
         elementType: "input",
@@ -56,6 +59,7 @@ class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       email: {
         elementType: "input",
@@ -68,6 +72,7 @@ class ContactData extends Component {
           required: true,
         },
         valid: false,
+        touched: false,
       },
       deliveryMethod: {
         elementType: "select",
@@ -77,10 +82,12 @@ class ContactData extends Component {
             { value: "cheapest", displayValue: "Cheapest" },
           ],
         },
-        value: "",
+        value: "fastest",
+        valid: true,
       },
     },
     loading: false,
+    formIsValid: false,
   };
 
   checkValidity = (value, rules) => {
@@ -130,10 +137,16 @@ class ContactData extends Component {
         updatedFormElement.validation
       );
     }
-
+    updatedFormElement.touched = true;
     console.log(updatedFormElement);
     updatedOrderForm[inputidentifyer] = updatedFormElement;
-    this.setState({ orderForm: updatedOrderForm });
+
+    let formIsValid = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+    }
+
+    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
 
   render() {
@@ -154,11 +167,14 @@ class ContactData extends Component {
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
             Invalid={!formElement.config.valid}
+            Touched={formElement.config.touched}
             ShouldValidate={formElement.config.validation}
             changed={(e) => this.inputChangedHandler(e, formElement.id)}
           />
         ))}
-        <Button btnType="Success">ORDER</Button>
+        <Button btnType="Success" disabled={!this.state.formIsValid}>
+          ORDER
+        </Button>
       </form>
     );
     if (this.state.loading) {
