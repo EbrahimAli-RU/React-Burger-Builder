@@ -1,0 +1,30 @@
+const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(
+        encodeURIComponent(i) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[i])
+      );
+    }
+    queryParams.push("price=" + this.state.totalPrice);
+    const queryString = queryParams.join("&");
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + queryString,
+    });
+
+
+componentWillMount() {
+        const query = new URLSearchParams(this.props.location.search)
+        const ingredients = {};
+        let price = 0;
+        for (let param of query.entries()) {
+            if(param[0] === 'price') {
+                price = param[1]
+            } else {
+                ingredients[param[0]] = +param[1]
+            }
+            
+        }
+        this.setState({ ingredients: ingredients, totalprice: price})
+    }
