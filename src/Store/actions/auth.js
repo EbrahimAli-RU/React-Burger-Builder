@@ -45,11 +45,11 @@ export const auth = (email, password, isSignUp) => {
       password,
     };
     let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAED5ST9ecaEtzGe7iFucNAXB1IdIfpbCE";
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDutXSD7lMQhBwhStfBbDYu_0IIGLkMZzA";
 
     if (!isSignUp) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAED5ST9ecaEtzGe7iFucNAXB1IdIfpbCE";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDutXSD7lMQhBwhStfBbDYu_0IIGLkMZzA";
     }
     axios
       .post(url, authData)
