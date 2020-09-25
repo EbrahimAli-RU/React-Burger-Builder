@@ -17,7 +17,7 @@ export class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    this.props.onInitIngredients();
+    this.props.onInitIngredients(this.props.token);
   }
   updatePurchasable(ingredients) {
     const ingredientsValue = Object.values(ingredients);
@@ -106,6 +106,7 @@ const mapStateToProps = (state) => {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     error: state.burgerBuilder.error,
+    token: state.auth.token,
   };
 };
 
@@ -114,7 +115,7 @@ const mapDispatchToProps = (dispatch) => {
     onIngredientAdded: (ingName) => dispatch(action.addIngredient(ingName)),
     onIngredientRemoved: (ingName) =>
       dispatch(action.removeIngredient(ingName)),
-    onInitIngredients: () => dispatch(action.initIngredients()),
+    onInitIngredients: (token) => dispatch(action.initIngredients(token)),
     onInitPurchase: () => dispatch(action.purchaseInit()),
   };
 };
