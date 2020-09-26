@@ -29,7 +29,11 @@ export class BurgerBuilder extends Component {
   }
 
   purchaseHandler = () => {
-    this.setState({ purchasing: true });
+    if (this.props.token) {
+      this.setState({ purchasing: true });
+    } else {
+      this.props.history.push("/auth");
+    }
   };
 
   modalClosedHandler = () => {
@@ -71,6 +75,7 @@ export class BurgerBuilder extends Component {
             purchasable={this.updatePurchasable(this.props.ings)}
             price={this.props.price.toFixed(2)}
             orderd={this.purchaseHandler}
+            isAuthenticate={this.props.token}
           />
         </Auxilary>
       );
