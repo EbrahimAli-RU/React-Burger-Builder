@@ -29,7 +29,6 @@ export const setIngredients = (ingredients) => {
 };
 
 export const initIngredients = (token) => {
-  console.log(token);
   return (dispatch) => {
     axios
       .get("https://react-my-burger-84bca.firebaseio.com/ingredients.json")

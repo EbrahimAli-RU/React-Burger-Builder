@@ -7,7 +7,6 @@ import * as action from "../../Store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
 class Orders extends Component {
   componentDidMount() {
-    console.log("[ORDER]");
     this.props.onFetchOrders(this.props.token, this.props.userId);
   }
   render() {

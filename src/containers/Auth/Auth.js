@@ -82,7 +82,6 @@ class Auth extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
-    console.log(this.state.controls);
     this.props.onAuth(
       this.state.controls.email.value,
       this.state.controls.password.value,
@@ -126,11 +125,10 @@ class Auth extends Component {
       errorMessage = <p>{this.props.error.message}</p>;
     }
     let authRedirect = null;
-    console.log(this.props.isAuth);
-    if (this.props.isAuth && this.props.building) {
-      console.log("GO TO CHECKOUT");
+    if (this.props.isAuthenticate && this.props.building) {
+
       authRedirect = <Redirect to="/checkout" />;
-    } else if (this.props.isAuth && !this.props.building) {
+    } else if (this.props.isAuthenticate && !this.props.building) {
       authRedirect = <Redirect to="/" />;
     }
 
@@ -157,7 +155,7 @@ const mapStateToProps = (state) => {
     loading: state.auth.loading,
     error: state.auth.error,
     isAuthenticate: state.auth.token,
-    isAuth: state.auth.isAuthenticate,
+    // isAuth: state.auth.isAuthenticate,
     buildingBurger: state.burgerBuilder.building,
     building: state.burgerBuilder.building,
     authRedirectPath: state.auth.authRedirectPath,
